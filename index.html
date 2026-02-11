@@ -2,15 +2,19 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Querés salir en San Valentín? </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title> Propuesta para Araceli Montania </title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --rosa-suave: #ffb3c1;
             --rosa-fuerte: #ff4d6d;
+            --azul-decision: #4cc9f0;
             --blanco: #fff0f3;
             --texto: #590d22;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             background-color: var(--blanco);
@@ -18,90 +22,160 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
             text-align: center;
+            padding: 20px;
+            transition: background-color 1s ease;
         }
 
         .container {
-            max-width: 400px;
-            padding: 20px;
+            max-width: 100%;
+            width: 450px;
             z-index: 10;
-            position: relative; /* Importante para el z-index de los botones */
+            position: relative;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+            backdrop-filter: blur(5px);
         }
 
-        #pantalla-final {
-            display: none;
-        }
+        #pantalla-decision, #pantalla-final { display: none; }
 
         img {
             width: 250px;
+            max-width: 90%;
             border-radius: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
         }
 
         h1 {
             color: var(--texto);
-            font-size: 1.8rem;
-            margin-bottom: 30px;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
         }
 
-        .botones {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-            min-height: 60px; /* Espacio para que los botones se muevan */
-        }
-
-        button {
+        button, .btn-maps, .btn-whatsapp {
             padding: 15px 30px;
             font-size: 1.1rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease; /* Transición más suave */
             font-weight: bold;
-            white-space: nowrap; /* Evita que el texto se rompa al crecer */
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .botones-inicio {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 150px;
+            position: relative;
         }
 
         #btn-si {
             background-color: var(--rosa-fuerte);
             color: white;
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            z-index: 20; /* Asegura que el SÍ siempre esté por encima */
-            position: relative;
+            z-index: 20;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap;
         }
 
         #btn-no {
             background-color: #e9ecef;
             color: #6c757d;
-            z-index: 10;
-            position: absolute; /* Posición absoluta para poder moverlo libremente */
-            left: 55%; /* Posición inicial */
+            z-index: 30;
+            width: 100px;
+            transition: none !important;
+            transform: none !important;
+        }
+
+        .botones-decision {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn-opcion {
+            background-color: var(--azul-decision);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        .btn-nada {
+            background-color: #6c757d;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
 
         .ticket {
+            display: none;
             background: white;
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 20px;
             margin-top: 20px;
             border: 3px dashed var(--rosa-suave);
             color: var(--texto);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            text-align: left;
         }
 
-        .ticket p { margin: 8px 0; font-size: 1.1rem; }
+        .ticket h2 { font-size: 1.2rem; text-align: center; color: var(--rosa-fuerte); margin-top: 0; text-transform: uppercase; }
+        .ticket p { margin: 10px 0; font-size: 0.95rem; line-height: 1.4; }
         .ticket strong { color: var(--rosa-fuerte); }
+
+        .btn-maps {
+            background-color: #f8f9fa;
+            color: #4285F4;
+            font-size: 0.85rem;
+            padding: 8px 15px;
+            border: 1px solid #4285F4;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: fit-content;
+        }
+
+        .whatsapp-footer {
+            display: block;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .comprobante-texto {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
 
         .corazon-bg {
             position: absolute;
             color: var(--rosa-suave);
             opacity: 0.5;
-            user-select: none;
             pointer-events: none;
             animation: flotar 4s linear infinite;
             z-index: 0;
@@ -116,23 +190,66 @@
 </head>
 <body>
 
+    <audio id="musica-triste" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rainy-Day-Sad-Violin-Music.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="pantalla-inicio" class="container">
-        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnlsb2swNTBkaG5waGdnNXNza2s0NXprZWdhdHlrZHpzMGUwdm0ydSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IU5ApmC4e6wEw/giphy.gif" alt="Gif Pregunta">
-        <h1>¿Querés salir en San Valentín? </h1>
-        <div class="botones">
-            <button id="btn-si" onclick="aceptar()">¡SÍ!</button>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnlsb2swNTBkaG5waGdnNXNza2s0NXprZWdhdHlrZHpzMGUwdm0ydSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IU5ApmC4e6wEw/giphy.gif" alt="Gif Koala">
+        <h1>¿Querés hacer algo en San Valentín Koala? </h1>
+        <div class="botones-inicio">
+            <button id="btn-si" onclick="irADecision()">¡SÍ!</button>
             <button id="btn-no" onmouseover="intentarNo()" onclick="intentarNo()">No</button>
         </div>
     </div>
 
-    <div id="pantalla-final" class="container">
+    <div id="pantalla-decision" class="container">
         <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzZ1OGx6Zmdqbnk1NmUyYXl4dnBrZmtncnN6Z2V1NHFwZ2ZrNzRuaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ytu2GUYbvhz7zShGwS/giphy.gif" alt="Gif Celebración">
-        <h1>¡Gracias por aceptar tomatito! 🍅 </h1>
-        <div class="ticket">
+        <h1>¡Gracias por aceptar, tomatito! <br>¿Qué plan preferís?</h1>
+        <div class="botones-decision">
+            <button class="btn-opcion" onclick="mostrarTicket('presencial')">☕ Salida en El Café de Acá</button>
+            <button class="btn-opcion" onclick="mostrarTicket('virtual')">🎬 Cine KONDA (Virtual)</button>
+            <button class="btn-nada" onclick="mostrarTicket('nada')">nada 🐼</button>
+        </div>
+    </div>
+
+    <div id="pantalla-final" class="container">
+        <img id="gif-final-dinamico" src="" alt="Gif Final">
+        <h1 id="titulo-final">¡Gracias por elegir esta opción! ❤️</h1>
+        
+        <div id="ticket-presencial" class="ticket">
+            <h2>Cita Presencial</h2>
             <p>📅 <strong>Sábado 14 de febrero</strong></p>
-            <p>📍 El Café de Acá</p>
-            <p><small>(Francisco Morra y Teniente Héctor Vera)</small></p>
+            <p>📍 El Café de Acá <br><small>(Francisco Morra y Tte. Héctor Vera)</small></p>
             <p>⏰ <strong>16:00 hs</strong></p>
+            <a href="https://maps.app.goo.gl/qvfpZUcV1oSNaxfh6" target="_blank" class="btn-maps">
+                📍 Ver ubicación en Maps
+            </a>
+            <div class="whatsapp-footer">
+                <span class="comprobante-texto">Mandar comprobante de resultado por whatsapp</span>
+                <a href="https://wa.link/gjk9ry" target="_blank" class="btn-whatsapp">Enviar a mi WhatsApp ✅</a>
+            </div>
+        </div>
+
+        <div id="ticket-virtual" class="ticket">
+            <h2>Cine KONDA</h2>
+            <p>📍 <strong>Lugar:</strong> Discord</p>
+            <p>🎬 <strong>Película:</strong> Actividad Paranormal 👻</p>
+            <p>🗓️ <strong>Sábado 14 de febrero</strong> | ⏰ <strong>20:00 hs</strong></p>
+            <div class="whatsapp-footer">
+                <span class="comprobante-texto">Mandar comprobante de resultado por whatsapp</span>
+                <a href="https://wa.link/gjk9ry" target="_blank" class="btn-whatsapp">Enviar a mi WhatsApp ✅</a>
+            </div>
+        </div>
+
+        <div id="ticket-nada" class="ticket">
+            <h2 style="color: #555;">...bueno 💔</h2>
+            <p>Has elegido la opción de no hacer nada. Los panditas están tristes.</p>
+            <p>Igual te quiero mucho, Koala.</p>
+            <div class="whatsapp-footer">
+                <span class="comprobante-texto">Mandar comprobante de resultado por whatsapp</span>
+                <a href="https://wa.link/gjk9ry" target="_blank" class="btn-whatsapp" style="background-color: #6c757d;">Enviar comprobante ❌</a>
+            </div>
         </div>
     </div>
 
@@ -140,71 +257,102 @@
         let escalaSi = 1;
         const btnSi = document.getElementById('btn-si');
         const btnNo = document.getElementById('btn-no');
-        let intentos = 0;
 
         function intentarNo() {
-            intentos++;
-            
-            // AJUSTE: Ahora crece solo un 20% cada vez (antes era 50%)
-            escalaSi += 0.2; 
+            escalaSi += 0.15; 
             btnSi.style.transform = `scale(${escalaSi})`;
-            
-            // Hacemos que el botón "No" se escape más lejos cada vez
-            const container = document.querySelector('.container');
-            const containerRect = container.getBoundingClientRect();
-            
-            // Limites para que el botón no se salga demasiado de la pantalla
-            const maxX = window.innerWidth * 0.8; 
-            const maxY = window.innerHeight * 0.8;
-            
-            const randomX = Math.random() * maxX - (maxX / 2);
-            const randomY = Math.random() * maxY - (maxY / 2);
+            const padding = 100;
+            const safeX = Math.max(0, window.innerWidth - 150);
+            const safeY = Math.max(0, window.innerHeight - 100);
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = Math.random() * safeX + 'px';
+            btnNo.style.top = Math.random() * safeY + 'px';
+        }
 
-            btnNo.style.position = 'fixed'; // Cambiamos a fixed para que se mueva por toda la pantalla
-            btnNo.style.left = `calc(50% + ${randomX}px)`;
-            btnNo.style.top = `calc(50% + ${randomY}px)`;
+        function irADecision() {
+            btnNo.style.display = 'none';
+            document.getElementById('pantalla-inicio').style.display = 'none';
+            document.getElementById('pantalla-decision').style.display = 'block';
+            lanzarCorazones(['❤️', '💖', '✨']);
+        }
+
+        async function enviarAFormspree(opcion) {
+            const formData = new FormData();
+            formData.append('eleccion', opcion);
+            formData.append('fecha', new Date().toLocaleString());
             
-            // Si lleva muchos intentos, el botón NO se hace medio transparente
-            if (intentos > 5) {
-                btnNo.style.opacity = '0.6';
+            try {
+                await fetch("https://formspree.io/f/xnjbjola", {
+                    method: "POST",
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+            } catch (error) {
+                console.log("Error enviando respuesta");
             }
         }
 
-        function aceptar() {
-            document.getElementById('pantalla-inicio').style.display = 'none';
+        function mostrarTicket(tipo) {
+            const gifFinalImg = document.getElementById('gif-final-dinamico');
+            const tituloFinal = document.getElementById('titulo-final');
+            document.body.style.backgroundColor = "var(--blanco)";
+            
+            // Enviar respuesta automáticamente a Formspree
+            enviarAFormspree(tipo);
+
+            if (tipo === 'presencial') {
+                gifFinalImg.src = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW5ianFpdjZrbWRza2NqM3ZsbzZ2NHBvMXh1Y2h2ejczYmo1NHp6biZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iUaDOqormK0U5yEdRT/giphy.gif";
+                document.getElementById('ticket-presencial').style.display = 'block';
+                document.getElementById('ticket-virtual').style.display = 'none';
+                document.getElementById('ticket-nada').style.display = 'none';
+                lanzarCorazones(['☕', '🥐', '🥰']);
+            } else if (tipo === 'virtual') {
+                gifFinalImg.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGIyb2JnbnFxdnd0dG5iZWlmamhmN3JneTZlejVwdTFwajdiZWl5bSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/siKMh3tAfQtsQ/giphy.gif";
+                document.getElementById('ticket-virtual').style.display = 'block';
+                document.getElementById('ticket-presencial').style.display = 'none';
+                document.getElementById('ticket-nada').style.display = 'none';
+                lanzarCorazones(['🍿', '🎬', '🐼', '👻']);
+            } else if (tipo === 'nada') {
+                document.body.style.backgroundColor = "#d3d3d3";
+                tituloFinal.innerText = "Oh... elegiste nada 🥺";
+                gifFinalImg.src = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNjAxZDdvejJ5bnVjajAxdHsqNzk3M3l0MDRudXM0OGUxejJjenQ4NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Q3Ou3eFKMTFn2/giphy.gif";
+                document.getElementById('ticket-nada').style.display = 'block';
+                document.getElementById('ticket-presencial').style.display = 'none';
+                document.getElementById('ticket-virtual').style.display = 'none';
+                document.getElementById('musica-triste').play();
+                lanzarCorazones(['🐼', '❌', '💔']);
+            }
+            document.getElementById('pantalla-decision').style.display = 'none';
             document.getElementById('pantalla-final').style.display = 'block';
-            lanzarCorazones();
         }
 
-        function lanzarCorazones() {
-            // Explosión de corazones al aceptar
+        function lanzarCorazones(emojis) {
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
-                    const corazon = document.createElement('div');
-                    corazon.classList.add('corazon-bg');
-                    corazon.innerHTML = ['❤️', '💖', '🎉', '✨'][Math.floor(Math.random() * 4)];
-                    corazon.style.left = Math.random() * 100 + 'vw';
-                    corazon.style.fontSize = Math.random() * 30 + 15 + 'px';
-                    corazon.style.animationDuration = Math.random() * 2 + 2 + 's';
-                    document.body.appendChild(corazon);
-                    setTimeout(() => corazon.remove(), 4000);
-                }, i * 50);
+                    const e = document.createElement('div');
+                    e.classList.add('corazon-bg');
+                    e.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    e.style.left = Math.random() * 100 + 'vw';
+                    e.style.fontSize = Math.random() * 30 + 15 + 'px';
+                    e.style.animationDuration = Math.random() * 2 + 2 + 's';
+                    document.body.appendChild(e);
+                    setTimeout(() => e.remove(), 4000);
+                }, i * 70);
             }
         }
 
-        // Animación suave de fondo constante
         setInterval(() => {
             const petalo = document.createElement('div');
             petalo.classList.add('corazon-bg');
             petalo.innerHTML = '🌸';
             petalo.style.left = Math.random() * 100 + 'vw';
-            petalo.style.animationDuration = '8s'; // Más lento para ser sutil
             document.body.appendChild(petalo);
             setTimeout(() => petalo.remove(), 8000);
-        }, 1000);
+        }, 1500);
     </script>
 </body>
-
 </html>
+</html>
+
 
 
